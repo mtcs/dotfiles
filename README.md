@@ -6,6 +6,8 @@ The most updated dotfile is definetely my vimrc. Enjoy!
 
 ## VIM
 
+![My pretty Vim](https://github.com/mtcs/dotfiles/raw/master/imgs/vim.png "My pretty Vim")
+
 This is my humble vim config, IT has too much plugins, but not enough apparently, because I still keep searching for more...
 
 ### Install
