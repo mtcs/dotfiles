@@ -1,6 +1,7 @@
 # dotfiles
 
-My personal dotfiles from Vim, tmux, etc (the public ones at least) 
+My personal dotfiles from Vim, tmux, etc. (the public ones at least) 
+
 The most updated dotfile is definetely my vimrc. Enjoy!
 
 ## VIM
