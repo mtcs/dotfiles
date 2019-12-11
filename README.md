@@ -1,6 +1,6 @@
 # dotfiles
 
-My personal dotfiles from Vim, tmux, etc. (the public ones at least) 
+My personal dotfiles from Vim, zsh, tmux, etc. (the public ones at least) 
 
 The most updated dotfile is definetely my vimrc. Enjoy!
 
@@ -32,6 +32,12 @@ I use Vim Plug, the best plugin manager, it is asynchronous! To install it just:
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
+
+## Zsh
+
+Zsh is my primary shell. I use Oh-My-Zsh for some plugins.
+
+There are some aliases for Arch Linux and lots of commented old stuff..
 
 ## Tmux
 
