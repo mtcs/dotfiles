@@ -20,6 +20,9 @@ set autoread                " Set to auto read when a file is changed from the o
 set viminfo^=%              " Remember info about open buffers on close
 set number relativenumber   " Hybrid relative numbering
 set previewheight=10
+set history=1000
+
+" set encoding=utf-8
 
 " Return to last edit position when opening files (You want this!)
 "autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |   exe \"normal! g`\"" | endif
@@ -32,7 +35,7 @@ set previewheight=10
 colorscheme mtcs
 
 " system slipboard as defaut
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 " For NeoVim
 " let g:clipboard = {
 "   \   'copy': {'+': 'xclip -selection clipboard', '*': 'xclip -selection clipboard', },
@@ -65,22 +68,26 @@ call plug#begin('~/.vim/plugged')
 "Plug 'vim-scripts/ingo-library'     " UnconditionalPaste
 "Plug 'vim-scripts/AlignFromCursor'  " UnconditionalPaste
 Plug 'honza/vim-snippets'            " Ultisnipets
+Plug 'shougo/vimproc.vim'            , {'do' : 'make'} " Vebugger
 Plug 'tpope/vim-speeddating'         , { 'for': 'org'    } " Orgmode
 
 " Interface
-"Plug 'kien/ctrlp.vim'               , { 'on': 'CtrlP'          } " Omni find (<C-P>)
-"Plug 'radenling/vim-dispatch-neovim', { 'on': ['Dispatch', 'Make', 'Make!']} " Neovim dispatch plugin
-Plug 'scrooloose/nerdtree'           , { 'on': 'NERDTreeToggle' } " Directory tree widget (e)
-Plug 'Xuyuanp/nerdtree-git-plugin'   , { 'on': 'NERDTreeToggle' } " Git integration for NT
-Plug 'majutsushi/tagbar'             , { 'on': 'TagbarToggle'   } " Code tag menu (t)
-Plug 'vim-scripts/AnsiEsc.vim'       , { 'on': 'AnsiEsc'        } " Ansi Colors (:AnsiEsc)
-Plug 'tpope/vim-dispatch'            , { 'on': ['Gpush', 'Dispatch', 'Make', 'Make!']}          " Ascync execution
-Plug 'xuhdev/vim-latex-live-preview' , { 'for': 'tex', 'on': 'LLPStartPreview' }                " Live tex rendering
-Plug 'tpope/vim-fugitive'            , { 'on': ['Gstatus', 'Gcommit', 'Gpush', 'Gdiff', 'GV'] } " Git Integration (:Gstatus :Gcommit)
-Plug 'junegunn/gv.vim'               , { 'on': 'GV'}                                            " Git View  (:GV)
-Plug 'w0rp/ale'                      " Lint engine (:ALEToggle)
-Plug 'airblade/vim-gitgutter'        " Git line gutter integration
-Plug 'haya14busa/incsearch.vim'      " Better incremental search
+"Plug 'kien/ctrlp.vim'                , { 'on': 'CtrlP'          } " Omni find (<C-P>)
+"Plug 'radenling/vim-dispatch-neovim' , { 'on': ['Dispatch', 'Make', 'Make!']} " Neovim dispatch plugin
+Plug 'scrooloose/nerdtree'            , { 'on': 'NERDTreeToggle' } " Directory tree widget (e)
+Plug 'Xuyuanp/nerdtree-git-plugin'    , { 'on': 'NERDTreeToggle' } " Git integration for NT
+Plug 'majutsushi/tagbar'              , { 'on': 'TagbarToggle'   } " Code tag menu (t)
+Plug 'vim-scripts/AnsiEsc.vim'        , { 'on': 'AnsiEsc'        } " Ansi Colors (:AnsiEsc)
+Plug 'tpope/vim-dispatch'             , { 'on': ['Gpush', 'Dispatch', 'Make', 'Make!']}          " Ascync execution
+Plug 'xuhdev/vim-latex-live-preview'  , { 'for': 'tex', 'on': 'LLPStartPreview' }                " Live tex rendering
+Plug 'tpope/vim-fugitive'             ", { 'on': ['Gstatus', 'Gcommit', 'Gpush', 'Gdiff', 'GV'] } \" Git Integration (:Gstatus :Gcommit)
+Plug 'junegunn/gv.vim'                , { 'on': 'GV'}                                            " Git View  (:GV)
+Plug 'w0rp/ale'                       " Lint engine (:ALEToggle)
+Plug 'airblade/vim-gitgutter'         " Git line gutter integration
+Plug 'haya14busa/incsearch.vim'       " Better incremental search
+Plug 'haya14busa/incsearch-fuzzy.vim' " Fuzzy beahavior for search 
+Plug 'Konfekt/FastFold'               " Faster folding
+Plug 'jeetsukumaran/vim-buffergator'  " Buffer browser
 
 " Looks (come last)
 Plug 'bling/vim-airline'                        " Status line
@@ -105,6 +112,7 @@ Plug 'terryma/vim-multiple-cursors' " Multiple cursors editting
 Plug 'idanarye/vim-casetrate'       " Switch between case stiles (camelcase, snakecase stc
 Plug 'tpope/vim-repeat'             " Repeat (.) support for other plugins
 Plug 'rhysd/vim-grammarous'         " Gramatic correction of text
+Plug 'junegunn/vim-emoji'
 "Plug 'FredKSchott/CoVim'           " Colaborative vim editting (shame it only works on python2 vim)
 
 " Sessions
@@ -115,17 +123,21 @@ Plug 'farmergreg/vim-lastplace' " Even without session, opens file in tha last p
 
 " Programming
 Plug 'Valloric/YouCompleteMe'       ,{ 'do': './install.py --clang-completer',} " Syntatic completion
+"Plug 'zxqfl/tabnine-vim'
 "Plug 'dansomething/vim-eclim'      ,{ 'for': ['java', 'scala'] } " Completion for java
 Plug 'alfredodeza/pytest.vim'       , { 'on' : 'Pytest'} " Pytest integration
-Plug 'idanarye/vim-vebugger'        , { 'on' : ['VBGstartGDB', 'VBGstartPDB', 'VBGattachGDB']} " Debugger integrations
+Plug 'idanarye/vim-vebugger'        " , { 'on' : ['VBGstartGDB', 'VBGstartPDB', 'VBGattachGDB']} \" Debugger integrations
 Plug 'apalmer1377/factorus'         " Refactorinc for python, C++ and Java 
 " Plug 'joonty/vdebug'              " Another debugger integrations
 Plug 'sirver/ultisnips'             " Snippet support 
 Plug 'mileszs/ack.vim'              " Find text on current local FS tree
+Plug 'zachahn/vim-ack-ag'           " Use Ack with ag
 Plug 'alfredodeza/coveragepy.vim'   " Highlight liens that are not covered by tests
 Plug 'fs111/pydoc.vim'              " Show python docummentation with S-k
+Plug 'tmhedberg/simpylfold'         " Simple folding for Python
 
-" Language Support
+
+" Basic Language Support
 Plug 'sheerun/vim-polyglot'           " 144 language packages, optimized to not impact startup                 
 Plug 'JuliaEditorSupport/julia-vim'   , { 'for': 'julia'  }
 Plug 'puppetlabs/puppet-syntax-vim'   , { 'for': 'puppet' }
@@ -133,6 +145,7 @@ Plug 'derekwyatt/vim-scala'           , { 'for': 'scala'  }
 Plug 'vim-latex/vim-latex'            , { 'for': 'latex'  }
 Plug 'jceb/vim-orgmode'               , { 'for': 'org'    }
 Plug 'mechatroner/rainbow_csv'        " CSV coloring and search
+Plug 'octol/vim-cpp-enhanced-highlight' " enhanced highilight for CPP
 Plug 'szymonmaszke/vimpyter'
 "Plug 'jalvesaq/Nvim-R'                
 
@@ -183,10 +196,10 @@ let g:ycm_warning_symbol = '!!'
 let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_echo_current_diagnostic = 1
 let g:ycm_auto_trigger = 1
-let g:ycm_global_ycm_extra_conf = '~/.config/nvim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_min_num_of_chars_for_completion = 3
-let g:ycm_max_num_candidates = 50
+let g:ycm_max_num_candidates = 30
 let g:ycm_max_num_identifier_candidates = 10
 let g:ycm_auto_trigger = 1
 let g:ycm_complete_in_comments = 1
@@ -209,10 +222,10 @@ let g:ale_python_flake8_use_global = 0
 "let g:ale_python_flake8_executable = 'python3'
 "let g:ale_python_pylint_executable = 'python3'
 "let g:ale_python_flake8_options = '-m flake8'
-let g:ale_python_flake8_options = '--ignore E501,E203'
+let g:ale_python_flake8_options = '--ignore E501,E203,E241'
 let g:ale_python_pylint_options = '--disable=redefined-outer-name' " '--disable=bad-whitespace'
-let g:ale_sign_error = "\u2718"
-let g:ale_sign_warning = "\u2755"
+"let g:ale_sign_error = "\u2718"
+"let g:ale_sign_warning = "\u2755"
 let g:ale_echo_cursor = 1
 let b:ale_fixers = {'python': ['isort']}
 "let g:ale_linters = {'python': ['flake8', 'pylint']}
@@ -226,7 +239,7 @@ let g:pydoc_window_lines = 0.4
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
-"let g:ultisnips_python_style = "google"
+let g:ultisnips_python_style = "google"
 
 " Doxygen Plugin
 autocmd Filetype c,cpp set comments^=:///
@@ -268,6 +281,18 @@ let g:casetrate_leader = '\k'
 " Rainbow csv
 let g:rcsv_colorpairs = [['red', 'red'], ['blue', 'blue'], ['green', 'green'], ['magenta', 'magenta'], ['NONE', 'NONE'], ['darkred', 'darkred'], ['darkblue', 'darkblue'], ['darkgreen', 'darkgreen'], ['darkmagenta', 'darkmagenta'], ['darkcyan', 'darkcyan']]
 
+" Ack
+let g:ackprg = 'ag --vimgrep'
+
+" vebugger debugger
+let g:vebugger_leader='<Leader>d'
+
+" simpylfold
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 1
+let g:SimpylFold_fold_import = 1
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Custom Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -288,6 +313,24 @@ nnoremap <leader>gp :Gpush<CR>
 nmap   <silent><Leader>tf   <Esc>:Pytest   file<CR>
 nmap   <silent><Leader>tc   <Esc>:Pytest   class<CR>
 nmap   <silent><Leader>tm   <Esc>:Pytest   method<CR>
+
+" Sourraound easy mapping
+vmap <silent>' S'
+vmap <silent>" S"
+vmap <silent>[ S]
+vmap <silent>] S[
+vmap <silent>{ S}
+vmap <silent>} S{
+vmap <silent>( S)
+vmap <silent>) S(
+nmap <silent><leader>' ysiw'
+nmap <silent><leader>" ysiw"
+nmap <silent><leader>[ ysiw]
+nmap <silent><leader>] ysiw[
+nmap <silent><leader>{ ysiw}
+nmap <silent><leader>} ysiw{
+nmap <silent><leader>( ysiw)
+nmap <silent><leader>) ysiw(
 
 " Linewise up/down
 imap   <silent>   <Down>   <C-o>gj
@@ -327,8 +370,8 @@ map   <silent>   <F2>           :tabnew<CR>
 map   <silent>   <C-t>          :tabnew<CR>
 map   <silent>   <A-PageUp>     :bp<CR>
 map   <silent>   <A-PageDown>   :bn<CR>
-map   <silent>   <C-PageUp>     :tabprev<CR>
-map   <silent>   <C-PageDown>   :tabnext<CR>
+map   <silent>   <A-S-PageUp>     :tabprev<CR>
+map   <silent>   <A-S-PageDown>   :tabnext<CR>
 ca   :tN<CR>   :tabnew<CR>
 ca   :tn<CR>   :tabnext<CR>
 ca   :tx<CR>   :tabnext<CR>
@@ -338,6 +381,9 @@ ca   :tc<CR>   :tabclose<CR>
 ca   :tm<CR>   :tabmove<CR>
 ca   :bq<CR>   :bd<CR>
 command! Sudowrite w !sudo sh -c 'cat > %'
+
+" Buffer mappings
+" ca :bonly :%bd|e#<CR>
 
 " CnrlP
 "map <silent> <C-P> :CtrlP<CR>
